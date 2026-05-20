@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0078D4" />
+  <title>Brovis - deklaracije paleta</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <link rel="stylesheet" href="./vendor/boxicons/css/boxicons.min.css" />
+  <link rel="stylesheet" href="./app.css" />
+  <link rel="stylesheet" href="./print.css" media="print" />
+</head>
+<body>
+  <!-- Splash (session-once) -->
+  <section id="splash" class="screen splash" hidden>
+    <div class="splash-inner">
+      <div class="splash-logo" aria-hidden="true">
+        <svg viewBox="0 0 120 60">
+          <ellipse cx="60" cy="30" rx="52" ry="22" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="60" y="34" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-weight="700" font-size="20" fill="currentColor">Brovis</text>
+        </svg>
+        <div class="splash-subtitle">AKOVA GROUP</div>
+      </div>
+      <div class="splash-title">Deklaracije paleta</div>
+      <div class="ring" aria-label="Učitavanje"></div>
+    </div>
+  </section>
+
+  <!-- Main app -->
+  <main id="app" class="screen app" hidden>
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="btn btn-subtle icon-only" id="nav-back" title="Nazad" aria-label="Nazad" hidden>
+          <i class="bx bx-arrow-back"></i>
+        </button>
+        <h1 class="app-title" id="app-title">Početna</h1>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-accent" id="btn-install" hidden>Instaliraj</button>
+        <button class="btn btn-subtle icon-only" id="btn-types" title="Tipovi dokumenata" aria-label="Tipovi dokumenata">
+          <i class="bx bx-list-ul"></i>
+        </button>
+        <button class="btn btn-subtle icon-only" id="btn-settings" title="Postavke" aria-label="Postavke">
+          <i class="bx bx-cog"></i>
+        </button>
+      </div>
+    </header>
+
+    <div id="infobar-slot"></div>
+    <div id="route-root" class="route-root"></div>
+  </main>
+
+  <!-- Modal host -->
+  <div id="modal-root"></div>
+
+  <!-- Toast host (bottom-left) -->
+  <div id="toast-host" class="toast-host"></div>
+
+  <!-- Print host (cleared after print) -->
+  <div id="print-root"></div>
+
+  <!-- Hidden file input for import -->
+  <input type="file" id="import-file" accept="application/json" hidden />
+
+  <!-- Scripts in dependency order -->
+  <script src="./labels.js"></script>
+  <script src="./types.js"></script>
+  <script src="./db.js"></script>
+  <script src="./pdf.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
