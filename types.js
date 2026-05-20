@@ -36,7 +36,7 @@ const SEED_TYPES = [
   },
   {
     id: "msm-pilece-meso",
-    title: "MEHANIČKI  SEPARISANO PILEĆE MESO – MSM   ZAMRZNUTO - ZA PRERADU",
+    title: "MEHANIČKI  SEPARISANO PILEĆE MESO – MSM ZAMRZNUTO - ZA PRERADU",
     defaultTemperature: "-18 ° C",
     shelfLifeDays: 90,
     requiresChemicalAnalysis: true,

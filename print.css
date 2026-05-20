@@ -1,11 +1,11 @@
 /* ============================================================
-   Print-only stylesheet. A4 portrait, ~20mm margins.
+   Print-only stylesheet. A4 portrait, ~16mm margins.
    Layout mirrors the scanned Brovis declarations:
    - Small Brovis oval logo top-left
-   - "Paleta broj: NN" centered with NN huge
-   - Rounded stamp rectangle top-right
-   - Producer + product title boxes stacked below, left side
-   - Two-column (labels left / values bordered column right) data block
+   - "Paleta broj: NN" center-left with NN huge
+   - Rounded vertical stamp rectangle top-right
+   - Producer + product title boxes stacked below the paleta line
+   - Two-column data block (labels left / values bordered column right)
    - MSM: chemical-analysis 3-col table sits as the last row of the values column
    - Footer: "Visoko; DD.MM.YYYY." bottom-left
    ============================================================ */
@@ -26,7 +26,7 @@
 #print-root .sheet {
   width: 210mm;
   min-height: 297mm;
-  padding: 16mm 16mm 14mm;
+  padding: 18mm 18mm 16mm;
   box-sizing: border-box;
   font-family: "Times New Roman", "Liberation Serif", Times, serif;
   font-size: 12pt;
@@ -39,66 +39,92 @@
 /* ---------- Header (logo / pallet number / stamp) ---------- */
 #print-root .sheet-head {
   display: grid;
-  grid-template-columns: 40mm 1fr 70mm;
+  /* Logo column, flexible pallet column, vertical stamp column.
+     Stamp width tied to the values-column width below for visual alignment. */
+  grid-template-columns: 42mm 1fr 52mm;
   align-items: start;
-  gap: 4mm;
+  column-gap: 4mm;
   margin-bottom: 6mm;
 }
-#print-root .logo-block { padding-top: 4mm; }
-#print-root .logo-svg { width: 38mm; height: 20mm; }
+#print-root .logo-block { padding-top: 3mm; }
+#print-root .logo-svg {
+  width: 38mm;
+  height: 19mm;
+  display: block;
+}
 
 #print-root .pallet-block {
   display: flex;
   align-items: baseline;
-  justify-content: center;
-  gap: 6mm;
-  padding-top: 6mm;
+  justify-content: flex-start;
+  gap: 5mm;
+  padding-top: 7mm;
+  padding-left: 2mm;
 }
 #print-root .pallet-label {
   font-size: 14pt;
-  font-weight: 600;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 #print-root .pallet-number {
   font-size: 40pt;
   font-weight: 700;
-  letter-spacing: 1px;
   line-height: 1;
 }
 
+/* Vertical rounded rectangle stamp box (matches the scanned originals). */
 #print-root .stamp-box {
   border: 1.2px solid #000;
   border-radius: 6mm;
-  width: 70mm;
-  height: 50mm;
+  width: 52mm;
+  height: 66mm;
   box-sizing: border-box;
+  justify-self: end;
 }
 
-/* ---------- Producer + title boxes (left column, below header) ---------- */
+/* ---------- Producer + title boxes (center-left column, under the header) ---------- */
+/* Aligned with the pallet column above, narrower than the page so the
+   stamp box (top-right) and values column (below) keep a clear right gutter. */
 #print-root .producer-box {
   border: 1px solid #000;
-  padding: 3mm 4mm 3mm;
-  width: 120mm;
-  margin: 0 0 4mm 14mm;
+  width: 116mm;
+  margin: 0 0 4mm 44mm;
+  padding: 2.5mm 5mm 3mm;
   font-size: 11pt;
-  line-height: 1.4;
+  line-height: 1.45;
 }
-#print-root .producer-line { margin-bottom: 1mm; }
-#print-root .producer-name { font-size: 12.5pt; }
-#print-root .producer-address { font-size: 11pt; }
-#print-root .producer-vet { font-size: 9.5pt; margin-top: 1mm; }
+#print-root .producer-line {
+  font-weight: 700;
+  margin-bottom: 0.5mm;
+}
+#print-root .producer-name {
+  font-size: 12.5pt;
+  font-style: italic;
+  font-weight: 700;
+  margin-bottom: 0.2mm;
+}
+#print-root .producer-address {
+  font-size: 11pt;
+  font-style: italic;
+}
+#print-root .producer-vet {
+  font-size: 9.5pt;
+  margin-top: 1mm;
+}
 
 #print-root .title-box {
   border: 1.2px solid #000;
-  padding: 4mm 4mm;
-  width: 120mm;
-  margin: 0 0 7mm 14mm;
+  width: 116mm;
+  margin: 0 0 7mm 44mm;
+  padding: 3mm 5mm;
   text-align: center;
   font-weight: 700;
   font-size: 13pt;
   line-height: 1.3;
 }
 
-/* ---------- Rows (labels left / values column right) ---------- */
+/* ---------- Rows (labels left / values bordered column right) ---------- */
+/* Values column width matches the stamp box (52mm) so they line up vertically. */
 #print-root .rows {
   display: flex;
   flex-direction: column;
@@ -106,8 +132,8 @@
 }
 #print-root .rows .row {
   display: grid;
-  grid-template-columns: 95mm 1fr;
-  gap: 4mm;
+  grid-template-columns: 1fr 52mm;
+  column-gap: 6mm;
   align-items: stretch;
 }
 #print-root .rows .row .lbl {
@@ -115,8 +141,8 @@
   align-items: center;
   font-size: 12pt;
   white-space: pre-line;
-  min-height: 11mm;
-  padding: 1.5mm 0;
+  min-height: 12mm;
+  padding: 1.5mm 0 1.5mm 2mm;
 }
 #print-root .rows .row .val {
   border-left: 1px solid #000;
@@ -126,14 +152,17 @@
   align-items: center;
   justify-content: center;
   padding: 2mm 4mm;
-  min-height: 11mm;
+  min-height: 12mm;
   font-size: 12pt;
   text-align: center;
+  word-break: break-word;
+  hyphens: auto;
 }
 /* Top of the values column needs a top border too. */
 #print-root .rows .row:first-child .val { border-top: 1px solid #000; }
+/* The temperature label is two lines — give the row a little more room. */
 #print-root .rows .row.temp-row .lbl,
-#print-root .rows .row.temp-row .val { min-height: 13mm; }
+#print-root .rows .row.temp-row .val { min-height: 14mm; }
 
 /* MSM chemical-analysis row: the value cell hosts a 3-col sub-table. */
 #print-root .rows .row.chem-row .lbl {
@@ -164,8 +193,8 @@
 /* ---------- Footer ---------- */
 #print-root .sheet-foot {
   position: absolute;
-  left: 16mm;
-  bottom: 14mm;
+  left: 18mm;
+  bottom: 16mm;
   font-size: 12pt;
 }
 

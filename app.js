@@ -417,10 +417,9 @@ function buildFAB(types) {
 
   types.slice().reverse().forEach((t, i) => {
     const row = h("div", { class: "mini-fab-row", "data-stagger": String(i) },
-      h("div", { class: "mini-fab-label" }, t.title.replace(/\s+/g, " ").slice(0, 60)),
-      h("button", { class: "mini-fab", "aria-label": `${UI_LABELS.newDocument}: ${t.title}`,
+      h("button", { class: "mini-fab-label", "aria-label": `${UI_LABELS.newDocument}: ${t.title}`,
         onclick: (e) => { e.stopPropagation(); close(); location.hash = `#/new/${t.id}`; }
-      }, bxi("bx-plus"))
+      }, t.title.replace(/\s+/g, " ").slice(0, 60))
     );
     host.appendChild(row);
   });
@@ -684,14 +683,14 @@ async function renderDocumentForm(root, { typeId, docId }) {
     field(UI_LABELS.fieldPaletaBroj, refs.paletaBroj, UI_LABELS.hintPaletaBroj)
   ));
 
-  // ---- Producer (collapsed by default) ----
-  const producerSection = collapsible(UI_LABELS.sectionProducer, true);
-  producerSection.body.appendChild(twoCol(
+  // ---- Producer (always expanded) ----
+  const producerCard = card(UI_LABELS.sectionProducer);
+  producerCard.appendChild(twoCol(
     field(UI_LABELS.fieldProducerName, inputBound("text", data.producer, "name", setDirty)),
     field(UI_LABELS.fieldVetControl, inputBound("text", data.producer, "vetControlNumber", setDirty))
   ));
-  producerSection.body.appendChild(field(UI_LABELS.fieldProducerAddress, inputBound("text", data.producer, "address", setDirty)));
-  form.appendChild(producerSection.root);
+  producerCard.appendChild(field(UI_LABELS.fieldProducerAddress, inputBound("text", data.producer, "address", setDirty)));
+  form.appendChild(producerCard);
 
   // ---- Product ----
   const product = card(UI_LABELS.sectionProduct);

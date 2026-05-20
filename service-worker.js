@@ -1,5 +1,5 @@
 // Bump CACHE_NAME on every release so installed clients see the update banner.
-const CACHE_NAME = "brovis-v2";
+const CACHE_NAME = "brovis-v4";
 
 const PRECACHE = [
   "./",
@@ -12,6 +12,7 @@ const PRECACHE = [
   "./types.js",
   "./labels.js",
   "./manifest.json",
+  "./brovis_logo.png",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",

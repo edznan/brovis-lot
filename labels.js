@@ -37,7 +37,7 @@ const UI_LABELS = {
   // App-wide
   appName: "Brovis - deklaracije paleta",
   // Nav
-  dashboard: "Početna",
+  dashboard: "Start",
   settings: "Postavke",
   types: "Tipovi dokumenata",
   back: "Nazad",
