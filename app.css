@@ -459,25 +459,27 @@ input.is-invalid:focus, textarea.is-invalid:focus, select.is-invalid:focus {
 .fab-host.open .mini-fab-row[data-stagger="6"] { transition-delay: 240ms; }
 .fab-host.open .mini-fab-row[data-stagger="7"] { transition-delay: 280ms; }
 
-/* Mini FAB row is a single clickable chip — the label IS the button */
+/* Mini FAB row is a single clickable chip — the label IS the button.
+   No truncation: long type titles wrap inside the pill so the full name is readable. */
 .mini-fab-label {
   background: var(--surface);
   color: var(--text);
   border: none;
   padding: 10px 18px;
-  border-radius: var(--radius-pill);
+  border-radius: 20px;
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.25px;
+  line-height: 1.35;
   box-shadow: var(--elev-2);
-  max-width: 360px;
+  max-width: min(560px, calc(100vw - 96px));
   cursor: pointer;
   text-align: right;
   transition: background 150ms ease, box-shadow 200ms ease, transform 100ms ease, color 150ms ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 .mini-fab-label:hover {
   background: var(--primary);

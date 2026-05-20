@@ -85,27 +85,27 @@ function renderTemplate(doc, type) {
     <div class="sheet">
       <header class="sheet-head">
         <div class="logo-block">
-          <svg viewBox="0 0 200 100" class="logo-svg">
-            <ellipse cx="100" cy="40" rx="90" ry="30" fill="none" stroke="black" stroke-width="2.5"/>
-            <text x="100" y="50" text-anchor="middle" font-family="Times New Roman, serif" font-style="italic" font-weight="700" font-size="36" fill="black">Brovis</text>
-            <text x="100" y="78" text-anchor="middle" font-family="Times New Roman, serif" font-size="10" letter-spacing="3" fill="black">AKOVA GROUP</text>
-          </svg>
+          <img src="./brovis_logo.png" alt="Brovis" class="logo-img" />
         </div>
         <div class="pallet-block">
           <span class="pallet-label">${esc(BS_LABELS.paletaBroj)}</span>
           <span class="pallet-number">${esc(doc.paletaBroj || "")}</span>
         </div>
-        <div class="stamp-box"></div>
       </header>
 
-      <section class="producer-box">
-        <div class="producer-line"><b>${esc(BS_LABELS.proizvodjac)}</b></div>
-        <div class="producer-name"><i><b>${esc(doc.producer.name)}</b></i></div>
-        <div class="producer-address"><i>${esc(doc.producer.address)}</i></div>
-        <div class="producer-vet">${esc(BS_LABELS.vetKontrolniBroj)} ${esc(doc.producer.vetControlNumber)}</div>
-      </section>
+      <section class="info-row">
+        <div class="info-left">
+          <section class="producer-box">
+            <div class="producer-line"><b>${esc(BS_LABELS.proizvodjac)}</b></div>
+            <div class="producer-name"><i><b>${esc(doc.producer.name)}</b></i></div>
+            <div class="producer-address"><i>${esc(doc.producer.address)}</i></div>
+            <div class="producer-vet">${esc(BS_LABELS.vetKontrolniBroj)} ${esc(doc.producer.vetControlNumber)}</div>
+          </section>
 
-      <section class="title-box">${esc(type.title).replace(/\n/g, "<br>")}</section>
+          <section class="title-box">${esc(type.title).replace(/\n/g, "<br>")}</section>
+        </div>
+        <div class="stamp-box"></div>
+      </section>
 
       <section class="rows">
         ${rowsHTML}
@@ -167,8 +167,9 @@ async function startBatchPrint(ids) {
       const actions = document.createElement("div");
       actions.className = "modal-actions";
       const cancelBtn = document.createElement("button");
-      cancelBtn.className = "btn btn-subtle";
-      cancelBtn.textContent = index >= ids.length ? "Zatvori" : "Otkaži";
+      const isDone = index >= ids.length;
+      cancelBtn.className = isDone ? "btn btn-subtle" : "btn btn-danger";
+      cancelBtn.textContent = isDone ? "Zatvori" : "Otkaži";
       cancelBtn.onclick = () => {
         cancelled = true;
         backdrop.remove();

@@ -1,5 +1,5 @@
 // Bump CACHE_NAME on every release so installed clients see the update banner.
-const CACHE_NAME = "brovis-v4";
+const CACHE_NAME = "brovis-v10";
 
 const PRECACHE = [
   "./",

@@ -187,9 +187,9 @@ const UI_LABELS = {
   bannerBackupReminder: (days) => `Preporučen je backup. Posljednji izvoz: prije ${days} dan(a).`,
   bannerExportNow: "Izvezi sada",
   // Counts
-  docsAcross: (docs, types) => `${docs} dokument(a) u ${types} tip(ova).`,
+  docsAcross: (docs, types) => `Svaki tip dokumenta predstavlja jedan proizvod. Trenutno: ${docs} dokument(a) u ${types} tip(ova).`,
   docsCount: (n) => `${n} dokument(a)`,
-  typesCount: (n) => `${n} tip(ova).`,
+  typesCount: (n) => `Tipovi dokumenata predstavljaju proizvode. Ukupno: ${n} tip(ova).`,
   // Form errors
   errFormHeader: "Provjerite obavezna polja:",
   errPaletaBroj: "Paleta broj je obavezan",

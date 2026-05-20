@@ -36,21 +36,24 @@
   position: relative;
 }
 
-/* ---------- Header (logo / pallet number / stamp) ---------- */
+/* ---------- Header (logo + pallet number) ---------- */
+/* Stamp box is no longer here — it now sits in the info-row beside the
+   producer/title boxes, so they all share the same vertical band. */
 #print-root .sheet-head {
   display: grid;
-  /* Logo column, flexible pallet column, vertical stamp column.
-     Stamp width tied to the values-column width below for visual alignment. */
-  grid-template-columns: 42mm 1fr 52mm;
-  align-items: start;
+  grid-template-columns: 42mm 1fr;
+  align-items: center;
   column-gap: 4mm;
-  margin-bottom: 6mm;
+  margin-bottom: 4mm;
 }
-#print-root .logo-block { padding-top: 3mm; }
-#print-root .logo-svg {
+#print-root .logo-block { padding-top: 1mm; }
+#print-root .logo-img {
   width: 38mm;
-  height: 19mm;
+  height: auto;
   display: block;
+  /* Force the printer to honour the actual image colours (orange logo). */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 #print-root .pallet-block {
@@ -58,7 +61,6 @@
   align-items: baseline;
   justify-content: flex-start;
   gap: 5mm;
-  padding-top: 7mm;
   padding-left: 2mm;
 }
 #print-root .pallet-label {
@@ -72,23 +74,24 @@
   line-height: 1;
 }
 
-/* Vertical rounded rectangle stamp box (matches the scanned originals). */
-#print-root .stamp-box {
-  border: 1.2px solid #000;
-  border-radius: 6mm;
-  width: 52mm;
-  height: 66mm;
-  box-sizing: border-box;
-  justify-self: end;
+/* ---------- Info row: producer + title on the left, stamp on the right ---------- */
+/* Two-column band that fills the top whitespace. Left column width is tuned
+   so the stamp box (right) lines up with the values column further below. */
+#print-root .info-row {
+  display: grid;
+  grid-template-columns: 1fr 52mm;
+  column-gap: 6mm;
+  align-items: start;
+  margin: 0 0 6mm 0;
+}
+#print-root .info-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
 }
 
-/* ---------- Producer + title boxes (center-left column, under the header) ---------- */
-/* Aligned with the pallet column above, narrower than the page so the
-   stamp box (top-right) and values column (below) keep a clear right gutter. */
 #print-root .producer-box {
   border: 1px solid #000;
-  width: 116mm;
-  margin: 0 0 4mm 44mm;
   padding: 2.5mm 5mm 3mm;
   font-size: 11pt;
   line-height: 1.45;
@@ -114,8 +117,6 @@
 
 #print-root .title-box {
   border: 1.2px solid #000;
-  width: 116mm;
-  margin: 0 0 7mm 44mm;
   padding: 3mm 5mm;
   text-align: center;
   font-weight: 700;
@@ -123,8 +124,19 @@
   line-height: 1.3;
 }
 
+/* Vertical rounded rectangle stamp box (matches the scanned originals). */
+#print-root .stamp-box {
+  border: 1.2px solid #000;
+  border-radius: 6mm;
+  width: 52mm;
+  height: 66mm;
+  box-sizing: border-box;
+  justify-self: end;
+}
+
 /* ---------- Rows (labels left / values bordered column right) ---------- */
-/* Values column width matches the stamp box (52mm) so they line up vertically. */
+/* Wide values column so it actually fills the page; previous 52mm matched the
+   stamp box but left a large dead band of whitespace to the left of each cell. */
 #print-root .rows {
   display: flex;
   flex-direction: column;
@@ -132,7 +144,7 @@
 }
 #print-root .rows .row {
   display: grid;
-  grid-template-columns: 1fr 52mm;
+  grid-template-columns: 70mm 1fr;
   column-gap: 6mm;
   align-items: stretch;
 }

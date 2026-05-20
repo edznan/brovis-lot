@@ -89,7 +89,7 @@ function confirmModal({ title, message, confirmLabel, danger = false }) {
     title,
     body: h("div", {}, message),
     actions: [
-      { label: UI_LABELS.cancel, variant: "btn-subtle", value: false },
+      { label: UI_LABELS.cancel, variant: "btn-danger", value: false },
       { label: confirmLabel || UI_LABELS.confirm, variant: danger ? "btn-danger" : "btn-accent", value: true, autofocus: true }
     ]
   }).then(v => !!v);
@@ -189,6 +189,7 @@ async function applyStoredTheme() {
 
 function registerTopbarActions() {
   $("#nav-back").onclick = () => history.back();
+  $("#nav-home").onclick = () => (location.hash = "#/dashboard");
   $("#btn-settings").onclick = () => (location.hash = "#/settings");
   $("#btn-types").onclick = () => (location.hash = "#/types");
   $("#btn-install").onclick = async () => {
@@ -217,7 +218,7 @@ function registerImportHandler() {
       title: UI_LABELS.modalImportTitle,
       body: UI_LABELS.modalImportBody(parsed.documents.length, (parsed.types || []).length),
       actions: [
-        { label: UI_LABELS.cancel, variant: "btn-subtle", value: undefined },
+        { label: UI_LABELS.cancel, variant: "btn-danger", value: undefined },
         { label: UI_LABELS.importMerge, variant: "btn-standard", value: "merge" },
         { label: UI_LABELS.importReplace, variant: "btn-danger", value: "replace" }
       ]
@@ -308,7 +309,9 @@ async function route() {
   const root = $("#route-root");
   removeFAB();
   removeBackupBanner();
-  $("#nav-back").hidden = parts[0] === "dashboard";
+  const onDashboard = parts[0] === "dashboard";
+  $("#nav-back").hidden = onDashboard;
+  $("#nav-home").hidden = onDashboard;
 
   try {
     if (parts[0] === "dashboard") return renderDashboard(root);
@@ -419,7 +422,7 @@ function buildFAB(types) {
     const row = h("div", { class: "mini-fab-row", "data-stagger": String(i) },
       h("button", { class: "mini-fab-label", "aria-label": `${UI_LABELS.newDocument}: ${t.title}`,
         onclick: (e) => { e.stopPropagation(); close(); location.hash = `#/new/${t.id}`; }
-      }, t.title.replace(/\s+/g, " ").slice(0, 60))
+      }, t.title.replace(/\s+/g, " "))
     );
     host.appendChild(row);
   });
@@ -804,7 +807,7 @@ async function renderDocumentForm(root, { typeId, docId }) {
 
   // ---- Action bar ----
   const actionBar = h("div", { class: "form-actionbar" });
-  actionBar.appendChild(h("button", { type: "button", class: "btn btn-subtle",
+  actionBar.appendChild(h("button", { type: "button", class: "btn btn-danger",
     onclick: async () => {
       if (dirty) {
         const ok = await confirmModal({ title: UI_LABELS.modalDiscardTitle, message: UI_LABELS.modalDiscardBody, confirmLabel: UI_LABELS.modalDiscard, danger: true });
@@ -1129,7 +1132,7 @@ async function editType(existing) {
     title: existing ? UI_LABELS.editType : UI_LABELS.newType,
     body,
     actions: [
-      { label: UI_LABELS.cancel, variant: "btn-subtle", value: false },
+      { label: UI_LABELS.cancel, variant: "btn-danger", value: false },
       { label: UI_LABELS.save, variant: "btn-accent", value: true }
     ]
   });
