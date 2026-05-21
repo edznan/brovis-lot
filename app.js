@@ -1090,7 +1090,7 @@ async function renderTypes(root) {
             if (count > 0) {
               showModal({ title: UI_LABELS.modalCannotDeleteTitle, body: UI_LABELS.modalCannotDeleteBody(count), actions: [{ label: UI_LABELS.ok, variant: "btn-accent", value: true }] });
               return;
-            }
+            } 
             const ok = await confirmModal({ title: UI_LABELS.modalDeleteTypeTitle, message: UI_LABELS.modalDeleteTypeBody(t.title.split("\n")[0]), confirmLabel: UI_LABELS.delete, danger: true });
             if (!ok) return;
             await DB.deleteType(t.id);
